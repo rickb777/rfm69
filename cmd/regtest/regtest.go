@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ecc1/rfm69"
+	"github.com/rickb777/rfm69"
 )
 
 func main() {
@@ -37,10 +37,10 @@ func checkRegs(r *rfm69.Radio) {
 	regs0 := r.ReadConfiguration(false)
 	regs1 := r.ReadConfiguration(true)
 	if len(regs0) != len(resetValue) {
-		log.Fatal("%d individual registers, expected %d", len(regs0), len(resetValue))
+		log.Fatalf("%d individual registers, expected %d", len(regs0), len(resetValue))
 	}
 	if len(regs1) != len(resetValue) {
-		log.Fatal("%d burst-mode registers, expected %d", len(regs1), len(resetValue))
+		log.Fatalf("%d burst-mode registers, expected %d", len(regs1), len(resetValue))
 	}
 	mismatches := 0
 	for i, v := range regs0 {

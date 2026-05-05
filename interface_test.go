@@ -1,7 +1,7 @@
 package rfm69
 
 import (
-	"github.com/ecc1/radio"
+	"github.com/rickb777/radio"
 )
 
 var (

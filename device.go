@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"time"
 
-	"github.com/ecc1/gpio"
-	"github.com/ecc1/radio"
+	"github.com/rickb777/gpio"
+	"github.com/rickb777/radio"
 )
 
 const (
