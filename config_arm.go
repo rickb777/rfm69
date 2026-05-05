@@ -1,4 +1,4 @@
-// +build !walrus
+//go:build linux && arm
 
 package rfm69
 

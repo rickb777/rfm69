@@ -1,4 +1,4 @@
-// +build customcs
+//go:build customcs && 386
 
 package rfm69
 

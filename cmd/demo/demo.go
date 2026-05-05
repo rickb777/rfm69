@@ -8,9 +8,7 @@ import (
 
 func main() {
 	r := rfm69.Open()
-	if r.Error() != nil {
-		log.Fatal(r.Error())
-	}
+	must(r.Error())
 
 	log.Printf("Resetting radio")
 	r.Reset()
@@ -47,9 +45,7 @@ func main() {
 }
 
 func dumpRF(r *rfm69.Radio) {
-	if r.Error() != nil {
-		log.Fatal(r.Error())
-	}
+	must(r.Error())
 	log.Printf("Mode: %s", r.State())
 	log.Printf("Frequency: %d Hz", r.Frequency())
 	mod := r.ReadModulationType()
@@ -63,4 +59,10 @@ func dumpRF(r *rfm69.Radio) {
 	}
 	log.Printf("Bitrate: %d baud", r.Bitrate())
 	log.Printf("Channel BW: %d Hz", r.ChannelBW())
+}
+
+func must(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }

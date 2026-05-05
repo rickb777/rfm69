@@ -10,9 +10,8 @@ import (
 
 func main() {
 	r := rfm69.Open()
-	if r.Error() != nil {
-		log.Fatal(r.Error())
-	}
+	must(r.Error())
+
 	r.Reset()
 	checkRegs(r)
 
@@ -30,9 +29,7 @@ func main() {
 }
 
 func checkRegs(r *rfm69.Radio) {
-	if r.Error() != nil {
-		log.Fatal(r.Error())
-	}
+	must(r.Error())
 	resetValue := rfm69.ResetConfiguration()
 	regs0 := r.ReadConfiguration(false)
 	regs1 := r.ReadConfiguration(true)
@@ -85,19 +82,24 @@ func readRegs(r *rfm69.Radio, kind string, data []byte) {
 	x := hw.ReadRegister(rfm69.RegSyncValue1)
 	y := hw.ReadRegister(rfm69.RegSyncValue2)
 	z := hw.ReadRegister(rfm69.RegSyncValue3)
-	if r.Error() != nil {
-		log.Fatal(r.Error())
-	}
+	must(r.Error())
+
 	fmt.Printf("single: %02X %02X %02X\n", x, y, z)
 	if x != data[0] || y != data[1] || z != data[2] {
 		fmt.Printf("ERROR: single reads did not match %s writes\n", kind)
 	}
+
 	v := hw.ReadBurst(rfm69.RegSyncValue1, 3)
-	if r.Error() != nil {
-		log.Fatal(r.Error())
-	}
+	must(r.Error())
+
 	fmt.Printf(" burst: %02X %02X %02X\n", v[0], v[1], v[2])
 	if !bytes.Equal(v, data) {
 		fmt.Printf("ERROR: burst reads did not match %s writes\n", kind)
+	}
+}
+
+func must(err error) {
+	if err != nil {
+		log.Fatal(err)
 	}
 }

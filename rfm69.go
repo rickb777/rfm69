@@ -1,6 +1,6 @@
 package rfm69
 
-// http://www.hoperf.com/upload/rf/RFM69HCW-V1.1.pdf
+// https://www.hoperf.com/modules/rf_transceiver/RFM69HCW.html
 
 const (
 	// FXOSC is the radio's oscillator frequency in Hertz.

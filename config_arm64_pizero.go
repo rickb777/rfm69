@@ -1,4 +1,4 @@
-// +build walrus
+//go:build linux && arm64 && pizero
 
 package rfm69
 

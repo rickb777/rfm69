@@ -1,4 +1,4 @@
-// +build !customcs !386
+//go:build !customcs || !386
 
 package rfm69
 

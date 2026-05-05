@@ -1,3 +1,5 @@
+//go:build linux && 386
+
 package rfm69
 
 // Configuration for Intel Edison.

@@ -1,3 +1,5 @@
+//go:build linux && amd64
+
 package rfm69
 
 // Configuration for amd64 (testing only).

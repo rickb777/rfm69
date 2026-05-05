@@ -2,6 +2,7 @@ package rfm69
 
 import (
 	"bytes"
+	"fmt"
 	"time"
 
 	"github.com/rickb777/gpio"
@@ -54,6 +55,11 @@ func (hwFlavor) WriteBurstAddress(addr byte) byte {
 	return SPIWriteMode | addr
 }
 
+func (hwFlavor) String() string {
+	return fmt.Sprintf("spi:%s at %dHz; interrupt pin %d; reset pin %d",
+		spiDevice, spiSpeed, interruptPin, resetPin)
+}
+
 // Radio represents an open radio device.
 type Radio struct {
 	hw            *radio.Hardware
@@ -65,7 +71,10 @@ type Radio struct {
 
 // Open opens the radio device.
 func Open() *Radio {
-	r := &Radio{hw: radio.Open(hwFlavor{})}
+	hw := hwFlavor{}
+	Printf("Opening radio %s\n", hw)
+
+	r := &Radio{hw: radio.Open(hw)}
 	v := r.Version()
 	if r.Error() != nil {
 		r.hw.Close()
@@ -144,3 +153,6 @@ func (r *Radio) SetError(err error) {
 func (r *Radio) Hardware() *radio.Hardware {
 	return r.hw
 }
+
+// Printf can be assigned to [log.Printf] to enable diagnostics.
+var Printf = func(format string, a ...any) {}

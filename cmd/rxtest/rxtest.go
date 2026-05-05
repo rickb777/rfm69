@@ -16,16 +16,14 @@ func main() {
 	}
 	frequency := getFrequency(os.Args[1])
 	r := rfm69.Open()
-	if r.Error() != nil {
-		log.Fatal(r.Error())
-	}
+	must(r.Error())
 	log.Printf("setting frequency to %d", frequency)
 	r.Init(frequency)
 	for r.Error() == nil {
 		data, rssi := r.Receive(time.Hour)
 		log.Printf("% X (RSSI = %d)", data, rssi)
 	}
-	log.Fatal(r.Error())
+	must(r.Error())
 }
 
 func getFrequency(s string) uint32 {
@@ -41,4 +39,10 @@ func getFrequency(s string) uint32 {
 	}
 	log.Fatalf("%s: invalid pump frequency", s)
 	panic("unreachable")
+}
+
+func must(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }
