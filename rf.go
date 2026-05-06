@@ -5,11 +5,6 @@ import (
 	"log"
 )
 
-const (
-	bitrate   = 16384  // baud
-	channelBW = 100000 // Hz
-)
-
 // ReadConfiguration reads the current register configuration from the radio,
 // using either burst-mode or individual SPI reads.
 func (r *Radio) ReadConfiguration(useBurst bool) []byte {
@@ -49,9 +44,11 @@ func (r *Radio) WriteConfiguration(config []byte, useBurst bool) {
 
 // InitRF initializes the radio to communicate with
 // a Medtronic insulin pump at the given frequency.
-func (r *Radio) InitRF(frequency uint32) {
+func (r *Radio) InitRF(frequency, bitrate, channelBW uint32) {
 	rf := DefaultConfiguration()
-	rf[RegDataModul] = PacketMode | ModulationTypeOOK | 0<<ModulationShapingShift
+	rf[RegDataModul] = PacketMode | ModulationTypeFSK | 0<<ModulationShapingShift
+	rf[RegFdevMsb] = 0x05 // 80kHz
+	rf[RegFdevLsb] = 0x1F
 	// Use PA1 with 13 dBm output power.
 	rf[RegPaLevel] = Pa1On | 0x1F<<OutputPowerShift
 	// Default != reset value
@@ -65,25 +62,25 @@ func (r *Radio) InitRF(frequency uint32) {
 	rf[RegRssiThresh] = 0xE4
 	// Make sure enough preamble bytes are sent.
 	rf[RegPreambleMsb] = 0x00
-	rf[RegPreambleLsb] = 0x18
+	rf[RegPreambleLsb] = 0x03
 	// Use 4 bytes for Sync word.
-	rf[RegSyncConfig] = SyncOn | 3<<SyncSizeShift
+	rf[RegSyncConfig] = SyncOn | 1<<SyncSizeShift
 	// Sync word.
-	rf[RegSyncValue1] = 0xFF
-	rf[RegSyncValue2] = 0x00
-	rf[RegSyncValue3] = 0xFF
-	rf[RegSyncValue4] = 0x00
+	rf[RegSyncValue1] = 0x1B
+	rf[RegSyncValue2] = 0x01
+	//rf[RegSyncValue3] = 0xFF
+	//rf[RegSyncValue4] = 0x00
 	// Use unlimited length packet format (data sheet section 5.5.2.3).
-	rf[RegPacketConfig1] = FixedLength
+	rf[RegPacketConfig1] = VariableLength | CrcOn
 	rf[RegPayloadLength] = 0
 	rf[RegFifoThresh] = TxStartFifoNotEmpty | fifoThreshold<<FifoThresholdShift
-	rf[RegPacketConfig2] = AutoRxRestartOff
+	rf[RegPacketConfig2] = AutoRxRestartOn | 0x10
 	r.WriteConfiguration(rf, true)
 	r.SetFrequency(frequency)
 	r.SetBitrate(bitrate)
 	r.SetChannelBW(channelBW)
 	// Default != reset value.
-	r.hw.WriteRegister(RegTestDagc, 0x30)
+	r.hw.WriteRegister(RegTestDagc, 0x20)
 }
 
 // Frequency returns the radio's current frequency, in Hertz.

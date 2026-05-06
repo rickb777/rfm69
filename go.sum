@@ -1,8 +1,10 @@
-github.com/rickb777/gpio v0.0.1 h1:IW8bUInG3j/eI2qO1Oq8N8v/pr5ZXAp6tiLYNgvzo58=
-github.com/rickb777/gpio v0.0.1/go.mod h1:KnIQOXkjJal8aABWWWdeG97VauOwffOa7MK1b8CTPpk=
+github.com/rickb777/gpio v0.0.2 h1:bIBQVc5DyD/xoOSASdfgkKvMlfV+A7JQh7EflG4U/R8=
+github.com/rickb777/gpio v0.0.2/go.mod h1:KnIQOXkjJal8aABWWWdeG97VauOwffOa7MK1b8CTPpk=
 github.com/rickb777/radio v0.0.1 h1:6bU3qkcBVE0zHbS2W86YOJPQ5NCmTZ8ggqac+FYUGkM=
 github.com/rickb777/radio v0.0.1/go.mod h1:5sPMHyyXcV6/cxXJyOyIlytsZ4+eFlZq1i6/RiNXJic=
-github.com/rickb777/spi v0.0.1 h1:YDpdAVmatcbgJnTnnLjOfNbg9IyqZzbRCnb2AbIJELg=
-github.com/rickb777/spi v0.0.1/go.mod h1:WGXRin44OeWlzRqbM9GN/Xndd859KVYJpo5yuaLpSbw=
+github.com/rickb777/radio v0.0.3 h1:Z+I1liL6MdEBilWFNMb3Ap3kS5O41vQ+FNyj0iblMfg=
+github.com/rickb777/radio v0.0.3/go.mod h1:mjoSzwcHj9fkR8LY+DnbkDfElnEw4CguddsHJeyosqg=
+github.com/rickb777/spi v0.0.2 h1:hCifn5cYQ18vpXTl7eLKS07P/InzMiSPdhsi9cMvy/E=
+github.com/rickb777/spi v0.0.2/go.mod h1:cIK2/JvbKElj9I6vTBvFAGN9j2OxKWFfIjqryHPhK/k=
 golang.org/x/sys v0.43.0 h1:Rlag2XtaFTxp19wS8MXlJwTvoh8ArU6ezoyFsMyCTNI=
 golang.org/x/sys v0.43.0/go.mod h1:4GL1E5IUh+htKOUEOaiffhrAeqysfVGipDYzABqnCmw=

@@ -8,7 +8,7 @@ package rfm69
 
 const (
 	spiDevice    = "/dev/spidev0.1"
-	spiSpeed     = 6000000 // Hz
-	interruptPin = 29      // GPIO for receive interrupts (DIO0)
-	resetPin     = 22      // GPIO for hardware reset
+	spiSpeed     = 4_000_000 // Hz
+	interruptPin = 29        // GPIO for receive interrupts (DIO0)
+	resetPin     = 22        // GPIO for hardware reset
 )

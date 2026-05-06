@@ -4,7 +4,7 @@ package rfm69
 
 const (
 	// FXOSC is the radio's oscillator frequency in Hertz.
-	FXOSC = 32000000
+	FXOSC = 32_000_000
 
 	// SPIWriteMode is used to encode register addresses for SPI writes.
 	SPIWriteMode = 1 << 7

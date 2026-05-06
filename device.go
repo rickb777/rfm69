@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/rickb777/gpio"
+	"github.com/rickb777/gpio/sysfs"
 	"github.com/rickb777/radio"
 )
 
@@ -72,9 +73,15 @@ type Radio struct {
 // Open opens the radio device.
 func Open() *Radio {
 	hw := hwFlavor{}
-	Printf("Opening radio %s\n", hw)
+	sysfs.Debugf("Opening radio %s\n", hw)
 
 	r := &Radio{hw: radio.Open(hw)}
+	if r.hw.Error() != nil {
+		r.err = r.hw.Error()
+		return r
+	}
+
+	sysfs.Debugf("Getting version %+v\n", r.hw)
 	v := r.Version()
 	if r.Error() != nil {
 		r.hw.Close()
@@ -128,9 +135,9 @@ func (r *Radio) Reset() {
 }
 
 // Init initializes the radio device.
-func (r *Radio) Init(frequency uint32) {
+func (r *Radio) Init(frequency, bitrate, channelBW uint32) {
 	r.Reset()
-	r.InitRF(frequency)
+	r.InitRF(frequency, bitrate, channelBW)
 	r.setMode(SleepMode)
 }
 
@@ -153,6 +160,3 @@ func (r *Radio) SetError(err error) {
 func (r *Radio) Hardware() *radio.Hardware {
 	return r.hw
 }
-
-// Printf can be assigned to [log.Printf] to enable diagnostics.
-var Printf = func(format string, a ...any) {}
